@@ -18,6 +18,7 @@ function AuthorizationPage() {
                       name="username"
                       placeholder="Ваш ник"
                       className="form-control"
+                      required
                     />
                     <label htmlFor="username">Ваш ник</label>
                   </div>
@@ -28,6 +29,7 @@ function AuthorizationPage() {
                       name="password"
                       placeholder="Пароль"
                       className="form-control"
+                      required
                     />
                     <label htmlFor="password">Пароль</label>
                   </div>
