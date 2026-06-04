@@ -1,5 +1,5 @@
-build:
-	cd frontend && npm run build
+build-frontend:
+	make -C frontend build
 
 start:
 	npx start-server -s ./frontend/dist
