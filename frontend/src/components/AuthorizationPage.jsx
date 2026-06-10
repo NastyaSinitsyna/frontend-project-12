@@ -2,18 +2,19 @@ import axios from 'axios'
 import { useFormik } from 'formik'
 import { Button, Form } from 'react-bootstrap'
 import { useNavigate, useLocation } from 'react-router-dom'
-
-
 import { useEffect, useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
+
+import { logIn } from '../slices/authSlice.js'
 
 import routes from '../routes.js'
-import useAuth from '../hooks/index.jsx'
 
 function AuthorizationPage() {
   const [authFailed, setAuthFailed] = useState(false)
 
-  const auth = useAuth()
+  const dispatch = useDispatch()
   const navigate = useNavigate()
+
   const location = useLocation()
   const inputRef = useRef()
   const redirectedPath = location.state?.from?.pathname ?? '/'
@@ -28,11 +29,9 @@ function AuthorizationPage() {
       setAuthFailed(false)
       try {
         const response = await axios.post(routes.loginPath(), values)
-        console.log(response)
         const token = response.data.token
-        console.log(token)
-        localStorage.setItem('token', JSON.stringify({ token }))
-        auth.logIn()
+        localStorage.setItem('token', token)
+        dispatch(logIn(token))
         navigate(redirectedPath, { replace: true })
       } catch(error) {
         formik.setSubmitting(false)
