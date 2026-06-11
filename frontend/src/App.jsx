@@ -1,9 +1,12 @@
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { Button, Container, Navbar } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
 
 import MainPage from './components/MainPage.jsx'
 import AuthorizationPage from './components/AuthorizationPage.jsx'
 import NotFoundPage from './components/NotFoundPage.jsx'
+
+import { logOut } from './slices/authSlice.js'
 
 
 const PrivateRoute = ({ children}) => {
@@ -14,21 +17,47 @@ const PrivateRoute = ({ children}) => {
   )
 }
 
+const LogOutButton = () => {
+  const dispatch = useDispatch()
+  const loggedIn = useSelector(state => state.authData.loggedIn)
+  return (
+    loggedIn
+    &&
+    <Button
+      className="btn btn-primary"
+      onClick={() => {
+        dispatch(logOut())
+        localStorage.removeItem('token')
+      }}>
+      Выйти
+    </Button>
+  )
+}
+
 const App = () => {
+  
   return (
     <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={(
-            <PrivateRoute>
-              <MainPage />
-            </PrivateRoute>
-          )}
-        />
-        <Route path="/login" element={<AuthorizationPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+      <div className="d-flex flex-column h-100">
+        <Navbar className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
+         <Container>
+           <Navbar.Brand href="/">Welcome to Chat!</Navbar.Brand>
+           <LogOutButton />
+         </Container>
+       </Navbar>
+        <Routes>
+          <Route
+            path="/"
+            element={(
+              <PrivateRoute>
+                <MainPage />
+              </PrivateRoute>
+           )}
+         />
+          <Route path="/login" element={<AuthorizationPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </div>
     </BrowserRouter>
   )
 }
