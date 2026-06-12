@@ -27,7 +27,6 @@ const LogOutButton = () => {
       className="btn btn-primary"
       onClick={() => {
         dispatch(logOut())
-        localStorage.removeItem('token')
       }}>
       Выйти
     </Button>
@@ -38,7 +37,7 @@ const App = () => {
   
   return (
     <BrowserRouter>
-      <div className="d-flex flex-column h-100">
+      <div className="d-flex flex-column vh-100">
         <Navbar className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
          <Container>
            <Navbar.Brand href="/">Welcome to Chat!</Navbar.Brand>

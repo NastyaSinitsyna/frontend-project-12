@@ -1,23 +1,19 @@
-import axios from 'axios'
 import { useFormik } from 'formik'
 import { Button, Form } from 'react-bootstrap'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { useEffect, useRef, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useEffect, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { logIn } from '../slices/authSlice.js'
-
-import routes from '../routes.js'
+import { getToken } from '../slices/authSlice.js'
 
 function AuthorizationPage() {
-  const [authFailed, setAuthFailed] = useState(false)
-
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const location = useLocation()
   const inputRef = useRef()
   const redirectedPath = location.state?.from?.pathname ?? '/'
+  const authFailed = useSelector(state => state.authData.authFailed)
 
   useEffect(() => {
     inputRef.current.focus()
@@ -26,21 +22,18 @@ function AuthorizationPage() {
   const formik = useFormik({
     initialValues: { username: "", password: "" },
     onSubmit: async (values) => {
-      setAuthFailed(false)
       try {
-        const response = await axios.post(routes.loginPath(), values)
-        const token = response.data.token
-        localStorage.setItem('token', token)
-        dispatch(logIn(token))
+        console.log('before dispatch')
+        await dispatch(getToken(values)).unwrap()
+        console.log('success')
         navigate(redirectedPath, { replace: true })
-      } catch(error) {
-        formik.setSubmitting(false)
-        if (error.isAxiosError && error.response?.status === 401) {
-          setAuthFailed(true)
-          return
-        }
-        throw error
       }
+      catch (error) {
+        if (error.status !== 401) {
+          throw error
+        }       
+      }
+      
     }
   })
 
@@ -78,7 +71,7 @@ function AuthorizationPage() {
                 <Form.Label htmlFor="password">Пароль</Form.Label>
                 <Form.Control.Feedback type="invalid">Неверные имя пользователя или пароль </Form.Control.Feedback>
               </div>
-              <Button type="submit" className="w-100 mb-3 btn btn-primary">Войти</Button>
+              <Button type="submit" disabled={formik.isSubmitting} className="w-100 mb-3 btn btn-primary">Войти</Button>
             </Form>
           </div>
           <div className="card-footer p-4">
