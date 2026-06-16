@@ -1,29 +1,28 @@
 import axios from 'axios'
 import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit'
-
+import { getAuthHeader } from '../utilities.js'
 import routes from '../routes.js'
 
 export const fetchMessages = createAsyncThunk(
   'messages/fetchMessages', 
-  async (authHeader) => {
-   const response = await axios.get(routes.messagesPath(), { headers: authHeader })
-   console.log({ messages: response.data })
+  async () => {
+   const response = await axios.get(routes.messagesPath(), { headers: getAuthHeader() })
     return response.data
   }
 )
 
 export const addMessage = createAsyncThunk(
   'messages/addMessage', 
-  async ({ authHeader, newMessage }) => {
-   const response = await axios.post(routes.messagesPath(), newMessage, { headers: authHeader })
+  async (newMessage) => {
+   const response = await axios.post(routes.messagesPath(), newMessage, { headers: getAuthHeader() })
     return response.data
   }
 )
 
 export const removeMessage = createAsyncThunk(
   'messages/removeMessage',
-  async ({ authHeader, messageId })   => {
-    await axios.delete(`${routes.messagesPath()}/${messageId}`, { headers: authHeader })
+  async (messageId) => {
+    await axios.delete(`${routes.messagesPath()}/${messageId}`, { headers: getAuthHeader() })
     return messageId
   }
 )
@@ -41,7 +40,6 @@ const messagesSlice = createSlice({
   }
 })
 
-// export const { fetchMessages } = messagesSlice.actions
 export const messagesSelectors = messagesAdapter.getSelectors(state => state.messages)
 
 export default messagesSlice.reducer
