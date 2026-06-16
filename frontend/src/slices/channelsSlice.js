@@ -1,29 +1,28 @@
 import axios from 'axios'
 import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit'
-
+import { getAuthHeader } from '../utilities.js'
 import routes from '../routes.js'
 
 export const fetchChannels = createAsyncThunk(
   'channels/fetchChannels', 
-  async (authHeader) => {
-   const response = await axios.get(routes.channelsPath(), { headers: authHeader })
-   console.log({channels: response.data})
+  async () => {
+   const response = await axios.get(routes.channelsPath(), { headers: getAuthHeader() })
     return response.data
   }
 )
 
 export const addChannel = createAsyncThunk(
   'channels/addChannel', 
-  async ({ authHeader, channel }) => {
-   const response = await axios.post(routes.channelsPath(), channel, { headers: authHeader })
+  async (channel) => {
+   const response = await axios.post(routes.channelsPath(), channel, { headers: getAuthHeader() })
     return response.data
   }
 )
 
 export const removeChannel = createAsyncThunk(
   'channels/removeChannel',
-  async ({ authHeader, channelId }) => {
-    await axios.delete(`${routes.channelsPath()}/${channelId}`, { headers: authHeader })
+  async (channelId) => {
+    await axios.delete(`${routes.channelsPath()}/${channelId}`, { headers: getAuthHeader() })
     return channelId
   }
 )
