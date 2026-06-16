@@ -23,9 +23,7 @@ function AuthorizationPage() {
     initialValues: { username: "", password: "" },
     onSubmit: async (values) => {
       try {
-        console.log('before dispatch')
         await dispatch(getToken(values)).unwrap()
-        console.log('success')
         navigate(redirectedPath, { replace: true })
       }
       catch (error) {
