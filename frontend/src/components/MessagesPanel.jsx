@@ -1,5 +1,5 @@
 import { Button, Col } from 'react-bootstrap'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { channelsSelectors } from '../slices/channelsSlice.js'
@@ -8,26 +8,30 @@ import { addMessage, fetchMessages, messagesSelectors } from '../slices/messages
 function MessagesPanel() {
   const dispatch = useDispatch()
 
-  useEffect(() => { 
-    dispatch(fetchMessages())
-  }, [])
-
   const currentChannelId = useSelector(state => state.channels.currentChannelId)
   const currentChannel = useSelector(state => channelsSelectors.selectById(state, currentChannelId))
+  const currentUser = useSelector(state => state.authData.username)
   const currentMessages = useSelector(messagesSelectors.selectAll)
     .filter((message) => message.channelId === currentChannelId)
+  
+  const inputRef = useRef()
 
   const [messageBody, setMessageBody] = useState('')
+
+  useEffect(() => {
+    inputRef.current.focus()
+    dispatch(fetchMessages())
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault()
     const newMessage = {
       body: messageBody,
       channelId: currentChannelId,
-      username: currentChannel.username,
+      username: currentUser,
     }
-    console.log(newMessage)
     dispatch(addMessage(newMessage))
+    setMessageBody('')
   }
   
 
@@ -64,9 +68,10 @@ function MessagesPanel() {
                 placeholder="Введите сообщение..."
                 className="border-0 p-0 ps-2 form-control"
                 value={messageBody}
+                ref={inputRef}
                 onChange={(e) => setMessageBody(e.target.value)}
               />
-              <Button type="submit">Отправить</Button>
+              <Button type="submit" disabled={!messageBody}>Отправить</Button>
             </div>
           </form>
         </div>
