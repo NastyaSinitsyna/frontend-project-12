@@ -1,12 +1,16 @@
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { Button, Container, Navbar } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
 
 import MainPage from './components/MainPage.jsx'
 import AuthorizationPage from './components/AuthorizationPage.jsx'
 import NotFoundPage from './components/NotFoundPage.jsx'
 
 import { logOut } from './slices/authSlice.js'
+import { socket } from './socket.js'
+import { messageAdded } from './slices/messagesSlice.js'
+import { channelAdded, channelRemoved, channelRenamed } from './slices/channelsSlice.js'
 
 
 const PrivateRoute = ({ children}) => {
@@ -34,7 +38,36 @@ const LogOutButton = () => {
 }
 
 const App = () => {
-  
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+
+    function onNewMessage(message) {
+      dispatch(messageAdded(message))
+    }
+    function onNewChannel(channel) {
+      dispatch(channelAdded(channel))
+    }
+    function onRemoveChannel(channelId) {
+      dispatch(channelRemoved(channelId))
+    }
+    function onRenameChannel(channel) {
+      dispatch(channelRenamed(channel))
+    }
+
+    socket.on('newMessage', onNewMessage)
+    socket.on('newChannel', onNewChannel)
+    socket.on('removeChannel', onRemoveChannel)
+    socket.on('renameChannel', onRenameChannel)
+
+    return () => {
+      socket.off('newMessage', onNewMessage)
+      socket.off('newChannel', onNewChannel)
+      socket.off('removeChannel', onRemoveChannel)
+      socket.off('renameChannel', onRenameChannel)
+    }
+  }, [])
+
   return (
     <BrowserRouter>
       <div className="d-flex flex-column vh-100">
