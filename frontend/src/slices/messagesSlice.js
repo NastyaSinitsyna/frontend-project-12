@@ -22,8 +22,8 @@ export const addMessage = createAsyncThunk(
 export const removeMessage = createAsyncThunk(
   'messages/removeMessage',
   async (messageId) => {
-    await axios.delete(`${routes.messagesPath()}/${messageId}`, { headers: getAuthHeader() })
-    return messageId
+    const response = await axios.delete(`${routes.messagesPath()}/${messageId}`, { headers: getAuthHeader() })
+    return response.data
   }
 )
 
@@ -32,6 +32,9 @@ const messagesAdapter = createEntityAdapter()
 const messagesSlice = createSlice({
   name: 'messages',
   initialState: messagesAdapter.getInitialState(),
+  reducers: {
+    messageAdded: messagesAdapter.addOne,
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchMessages.fulfilled, messagesAdapter.addMany)
@@ -41,5 +44,6 @@ const messagesSlice = createSlice({
 })
 
 export const messagesSelectors = messagesAdapter.getSelectors(state => state.messages)
+export const { messageAdded } = messagesSlice.actions
 
 export default messagesSlice.reducer
