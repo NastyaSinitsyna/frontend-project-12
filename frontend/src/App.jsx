@@ -3,9 +3,9 @@ import { Button, Container, Navbar } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 
-import MainPage from './components/MainPage.jsx'
-import AuthorizationPage from './components/AuthorizationPage.jsx'
-import NotFoundPage from './components/NotFoundPage.jsx'
+import MainPage from './pages/MainPage.jsx'
+import AuthorizationPage from './pages/AuthorizationPage.jsx'
+import NotFoundPage from './pages/NotFoundPage.jsx'
 
 import { logOut } from './slices/authSlice.js'
 import { socket } from './socket.js'

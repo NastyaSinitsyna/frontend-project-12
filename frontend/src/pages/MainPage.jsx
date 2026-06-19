@@ -1,7 +1,7 @@
 import { Container, Row } from 'react-bootstrap'
 
-import ChannelsPanel from './ChannelsPanel.jsx'
-import MessagesPanel from './MessagesPanel.jsx'
+import ChannelsPanel from '../components/ChannelsPanel.jsx'
+import MessagesPanel from '../components/MessagesPanel.jsx'
 
 function MainPage() {
   return (
