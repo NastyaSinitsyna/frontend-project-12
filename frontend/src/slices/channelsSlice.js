@@ -19,11 +19,19 @@ export const addChannel = createAsyncThunk(
   }
 )
 
+export const editChannel = createAsyncThunk(
+  'channels/editChannel',
+  async ({ editedChannel, channelId  }) => {
+    const response = await axios.patch(`${routes.channelsPath()}/${channelId}`, editedChannel, { headers: getAuthHeader() })
+    return response.data
+  }
+)
+
 export const removeChannel = createAsyncThunk(
   'channels/removeChannel',
   async (channelId) => {
-    await axios.delete(`${routes.channelsPath()}/${channelId}`, { headers: getAuthHeader() })
-    return channelId
+    const response = await axios.delete(`${routes.channelsPath()}/${channelId}`, { headers: getAuthHeader() })
+    return response.data
   }
 )
 
@@ -35,23 +43,31 @@ const channelsSlice = createSlice({
   reducers: {
     setCurrentChannel: (state, action) => {
       state.currentChannelId = action.payload
-    }
+    },
+    channelAdded: channelsAdapter.addOne,
+    channelRemoved: channelsAdapter.removeOne,
+    channelRenamed: (state, action) => {
+      channelsAdapter.updateOne(state, { id: action.payload.id, changes: action.payload })
+    },
   },
   extraReducers: (builder) => {
       builder
       .addCase(fetchChannels.fulfilled, (state, action) => {
-        channelsAdapter.addMany(state, action.payload)
+        channelsAdapter.setAll(state, action.payload)
         if (!state.currentChannelId) {
           state.currentChannelId = state.ids[0] ?? null
         }
       })
       .addCase(addChannel.fulfilled, channelsAdapter.addOne)
+      .addCase(editChannel.fulfilled, (state, action) => {
+        channelsAdapter.updateOne(state, { id: action.payload.id, changes: action.payload })
+      })
       .addCase(removeChannel.fulfilled, channelsAdapter.removeOne)
       
     }
 })
 
 export const channelsSelectors = channelsAdapter.getSelectors(state => state.channels)
-export const { setCurrentChannel } = channelsSlice.actions
+export const { setCurrentChannel, channelAdded, channelRemoved, channelRenamed } = channelsSlice.actions
 
 export default channelsSlice.reducer
