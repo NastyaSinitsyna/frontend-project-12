@@ -1,9 +1,8 @@
-import { Button } from 'react-bootstrap'
+import { Button, ButtonGroup, Dropdown } from 'react-bootstrap'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import cn from 'classnames'
 
-import { fetchChannels, channelsSelectors, setCurrentChannel } from '../slices/channelsSlice.js'
+import { fetchChannels, channelsSelectors, setCurrentChannel, removeChannel, editChannel } from '../slices/channelsSlice.js'
 
 function ChannelsList() {
   const dispatch = useDispatch()
@@ -13,19 +12,46 @@ function ChannelsList() {
 
   useEffect(() => { 
     dispatch(fetchChannels())
-  }, [])
+  }, [channels])
+  
+  const toggleButtonVariant = id => id === currentChannelId ? "secondary" : "light"
+
+  const renderChannelButton = (channel) => {
+    const { id, name, removable } = channel
+    if (removable) {
+      return (
+        <Dropdown as={ButtonGroup} className="w-100">
+          <Button
+            variant={toggleButtonVariant(id)}
+            className="flex-grow-1 text-start text-truncate"
+            onClick={() => dispatch(setCurrentChannel(id))}>
+            {name}
+          </Button>
+          <Dropdown.Toggle split variant={toggleButtonVariant(id)} id="dropdown-split-basic" />
+          <Dropdown.Menu>
+            <Dropdown.Item onClick={() => dispatch(removeChannel(id))}>Удалить</Dropdown.Item>
+            <Dropdown.Item>Переименовать</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+      )
+    }
+    return(
+      <Button
+        type="button"
+        variant={toggleButtonVariant(id)}
+        className="w-100 rounded-0 text-start"
+        onClick={() => dispatch(setCurrentChannel(id))}>
+        {channel.name}
+      </Button>
+    )
+  }
 
   return (
     <>
       <ul id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
         {channels.map((channel) => (
           <li key={channel.id} id={channel.id} className="nav-item w-100">
-            <button
-              type="button"
-              className={cn('w-100', 'rounded-0', 'text-start', 'btn', {'btn-secondary': channel.id === currentChannelId})}
-              onClick={() => dispatch(setCurrentChannel(channel.id))}>
-              {channel.name}
-            </button>
+            {renderChannelButton(channel)}
           </li>
         ))}
       </ul>

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 import { validChannelSchema } from '../validationSchemas.js'
 
-import { addChannel, fetchChannels,channelsSelectors } from '../slices/channelsSlice.js'
+import { addChannel, fetchChannels, setCurrentChannel, channelsSelectors } from '../slices/channelsSlice.js'
 
 import ChannelsList from './ChannelsList.jsx'
 
@@ -24,8 +24,9 @@ function ChannelsPanel() {
     validateOnChange: false,
     validateOnBlur: false,
     onSubmit: async (values, { resetForm }) => {
-      await dispatch(addChannel(values))
+      const newChannel = await dispatch(addChannel(values)).unwrap()
       resetForm()
+      dispatch(setCurrentChannel(newChannel.id))
       setShow(false)
     },
   })
