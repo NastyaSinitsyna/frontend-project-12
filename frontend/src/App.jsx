@@ -48,8 +48,8 @@ const App = () => {
     function onNewChannel(channel) {
       dispatch(channelAdded(channel))
     }
-    function onRemoveChannel(channelId) {
-      dispatch(channelRemoved(channelId))
+    function onRemoveChannel(channel) {
+      dispatch(channelRemoved(channel.id))
     }
     function onRenameChannel(channel) {
       dispatch(channelRenamed(channel))
