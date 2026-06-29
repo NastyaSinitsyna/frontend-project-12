@@ -45,7 +45,12 @@ const channelsSlice = createSlice({
       state.currentChannelId = action.payload
     },
     channelAdded: channelsAdapter.addOne,
-    channelRemoved: channelsAdapter.removeOne,
+    channelRemoved: (state, action) => {
+      channelsAdapter.removeOne(state, action.payload.id)
+      if (state.currentChannelId === action.payload.id) {
+        state.currentChannelId = state.ids[0] ?? null
+      }
+    },
     channelRenamed: (state, action) => {
       channelsAdapter.updateOne(state, { id: action.payload.id, changes: action.payload })
     },
@@ -68,7 +73,6 @@ const channelsSlice = createSlice({
           state.currentChannelId = state.ids[0] ?? null
         }
       })
-      
     }
 })
 
