@@ -5,3 +5,5 @@ export const getAuthHeader = () => {
   }
   return {}
 }
+
+export const toggleButtonVariant = (id, currentId) => id === currentId ? "secondary" : "light"
