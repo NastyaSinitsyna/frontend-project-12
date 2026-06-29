@@ -62,7 +62,12 @@ const channelsSlice = createSlice({
       .addCase(editChannel.fulfilled, (state, action) => {
         channelsAdapter.updateOne(state, { id: action.payload.id, changes: action.payload })
       })
-      .addCase(removeChannel.fulfilled, channelsAdapter.removeOne)
+      .addCase(removeChannel.fulfilled, (state, action) => {
+        channelsAdapter.removeOne(state, action.payload.id)
+        if (state.currentChannelId === action.payload.id) {
+          state.currentChannelId = state.ids[0] ?? null
+        }
+      })
       
     }
 })
