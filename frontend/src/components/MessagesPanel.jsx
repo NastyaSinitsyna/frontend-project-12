@@ -10,10 +10,13 @@ function MessagesPanel() {
 
   const currentChannelId = useSelector(state => state.channels.currentChannelId)
   const currentChannel = useSelector(state => channelsSelectors.selectById(state, currentChannelId))
+
   const currentUser = useSelector(state => state.authData.username)
   const currentMessages = useSelector(messagesSelectors.selectAll)
     .filter((message) => message.channelId === currentChannelId)
-  
+
+  const isLoading = useSelector(state => state.messages.isLoading)
+
   const inputRef = useRef()
 
   const [messageBody, setMessageBody] = useState('')
@@ -23,7 +26,7 @@ function MessagesPanel() {
     dispatch(fetchMessages())
   }, [])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const newMessage = {
       body: messageBody,
@@ -31,7 +34,7 @@ function MessagesPanel() {
       username: currentUser,
     }
     dispatch(addMessage(newMessage))
-    setMessageBody('')
+      setMessageBody('')
   }
   
 
@@ -69,9 +72,10 @@ function MessagesPanel() {
                 className="border-0 p-0 ps-2 form-control"
                 value={messageBody}
                 ref={inputRef}
+                disabled={isLoading}
                 onChange={(e) => setMessageBody(e.target.value)}
               />
-              <Button type="submit" disabled={!messageBody}>Отправить</Button>
+              <Button type="submit" disabled={!messageBody || isLoading}>Отправить</Button>
             </div>
           </form>
         </div>

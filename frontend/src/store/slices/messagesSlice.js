@@ -32,15 +32,27 @@ const messagesAdapter = createEntityAdapter()
 
 const messagesSlice = createSlice({
   name: 'messages',
-  initialState: messagesAdapter.getInitialState(),
+  initialState: messagesAdapter.getInitialState({ isLoading: false }),
   reducers: {
     messageAdded: messagesAdapter.addOne,
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchMessages.fulfilled, messagesAdapter.addMany)
-      .addCase(addMessage.fulfilled, messagesAdapter.addOne)
+
+      .addCase(addMessage.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(addMessage.fulfilled, (state, action) => {
+        state.isLoading = false
+        messagesAdapter.addOne(state, action.payload)
+      })
+      .addCase(addMessage.rejected, (state) => {
+        state.isLoading = false
+      })
+
       .addCase(removeMessage.fulfilled, messagesAdapter.removeOne)
+
       .addCase(removeChannel.fulfilled, (state, action) => {
         const channelId = action.payload.id
         const messagesToRemove = Object.values(state.entities)
