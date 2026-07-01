@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 import { validChannelSchema } from '../validationSchemas.js'
 
-import { addChannel, fetchChannels, setCurrentChannel, channelsSelectors } from '../slices/channelsSlice.js'
+import { addChannel, fetchChannels, setCurrentChannel, channelsSelectors } from '../store/slices/channelsSlice.js'
 
 import ChannelsList from './ChannelsList.jsx'
 

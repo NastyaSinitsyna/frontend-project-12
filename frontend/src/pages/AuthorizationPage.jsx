@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { getToken } from '../slices/authSlice.js'
+import { getToken } from '../store/slices/authSlice.js'
 
 function AuthorizationPage() {
   const dispatch = useDispatch()

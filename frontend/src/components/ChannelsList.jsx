@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { fetchChannels, channelsSelectors } from '../slices/channelsSlice.js'
+import { fetchChannels, channelsSelectors } from '../store/slices/channelsSlice.js'
 
 import DefaultChannelButton from './DefaultChannelButton.jsx'
 import NewChannelButton from './NewChannelButton.jsx'

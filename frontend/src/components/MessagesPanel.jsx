@@ -2,8 +2,8 @@ import { Button, Col } from 'react-bootstrap'
 import { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { channelsSelectors } from '../slices/channelsSlice.js'
-import { addMessage, fetchMessages, messagesSelectors } from '../slices/messagesSlice.js'
+import { channelsSelectors } from '../store/slices/channelsSlice.js'
+import { addMessage, fetchMessages, messagesSelectors } from '../store/slices/messagesSlice.js'
 
 function MessagesPanel() {
   const dispatch = useDispatch()

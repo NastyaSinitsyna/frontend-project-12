@@ -2,7 +2,7 @@ import { Button, ButtonGroup, Dropdown } from 'react-bootstrap'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { setCurrentChannel } from '../slices/channelsSlice.js'
+import { setCurrentChannel } from '../store/slices/channelsSlice.js'
 import { toggleButtonVariant } from '../utilities.js'
 import RemoveModal from './RemoveModal.jsx'
 import RenameModal from './RenameModal.jsx'

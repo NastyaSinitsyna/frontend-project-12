@@ -1,7 +1,7 @@
 import { Button, Modal } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 
-import { removeChannel } from '../slices/channelsSlice.js'
+import { removeChannel } from '../store/slices/channelsSlice.js'
 
 function RemoveModal({ show, onHide, channelId }) {
   const dispatch = useDispatch()

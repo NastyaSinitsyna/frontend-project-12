@@ -7,10 +7,10 @@ import MainPage from './pages/MainPage.jsx'
 import AuthorizationPage from './pages/AuthorizationPage.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
 
-import { logOut } from './slices/authSlice.js'
+import { logOut } from './store/slices/authSlice.js'
 import { socket } from './socket.js'
-import { messageAdded } from './slices/messagesSlice.js'
-import { channelAdded, channelRemoved, channelRenamed } from './slices/channelsSlice.js'
+import { messageAdded } from './store/slices/messagesSlice.js'
+import { channelAdded, channelRemoved, channelRenamed } from './store/slices/channelsSlice.js'
 
 
 const PrivateRoute = ({ children}) => {

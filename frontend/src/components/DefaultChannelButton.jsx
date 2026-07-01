@@ -1,7 +1,7 @@
 import { Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { setCurrentChannel } from '../slices/channelsSlice.js'
+import { setCurrentChannel } from '../store/slices/channelsSlice.js'
 import { toggleButtonVariant } from '../utilities.js'
 
 function DefaultChannelButton({ channel }) {
