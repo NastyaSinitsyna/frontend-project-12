@@ -1,5 +1,5 @@
 import { Button, Col, Form, Modal } from 'react-bootstrap'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 import { validChannelSchema } from '../validationSchemas.js'
@@ -10,6 +10,8 @@ import ChannelsList from './ChannelsList.jsx'
 
 function ChannelsPanel() {
   const dispatch = useDispatch()
+
+  const inputRef = useRef(null)
 
   useEffect(() => { 
     dispatch(fetchChannels())
@@ -48,7 +50,7 @@ function ChannelsPanel() {
         <Button variant="primary" onClick={() => setShow(true)}>
           +
         </Button>
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={handleClose} onEntered={() => inputRef.current?.focus()}>
           <Form onSubmit={formik.handleSubmit}>
             <Modal.Header closeButton>
               <Modal.Title>Добавить канал</Modal.Title>
@@ -62,6 +64,7 @@ function ChannelsPanel() {
                   placeholder='Имя канала'
                   required
                   value={formik.values.name}
+                  ref={inputRef}
                   isInvalid={formik.touched.name && !!formik.errors.name}
                   onChange={handleChange}
                   onBlur={formik.handleBlur}
