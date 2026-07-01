@@ -1,14 +1,15 @@
 import { Button, Form, Modal } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
+import { useRef } from 'react' 
 import { useFormik } from 'formik'
 import { validChannelSchema } from '../validationSchemas.js'
 
-import { editChannel, channelsSelectors } from '../slices/channelsSlice.js'
+import { editChannel, channelsSelectors } from '../store/slices/channelsSlice.js'
 
 function RenameModal({ show, onHide, channel }) {
   const dispatch = useDispatch()
   const channels = useSelector(channelsSelectors.selectAll)
-
+  const inputRef = useRef(null)
 
   const formik = useFormik({
       initialValues: {name: channel.name},
@@ -37,7 +38,7 @@ function RenameModal({ show, onHide, channel }) {
   
   return (
     <>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} onEntered={() => inputRef.current?.focus()}>
           <Form onSubmit={formik.handleSubmit}>
             <Modal.Header closeButton>
               <Modal.Title>Переименовать канал</Modal.Title>
@@ -51,6 +52,7 @@ function RenameModal({ show, onHide, channel }) {
                   placeholder='Имя канала'
                   required
                   value={formik.values.name}
+                  ref={inputRef}
                   isInvalid={formik.touched.name && !!formik.errors.name}
                   onChange={handleChange}
                   onBlur={formik.handleBlur}
