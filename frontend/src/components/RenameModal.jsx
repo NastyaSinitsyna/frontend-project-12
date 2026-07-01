@@ -10,6 +10,7 @@ function RenameModal({ show, onHide, channel }) {
   const dispatch = useDispatch()
   const channels = useSelector(channelsSelectors.selectAll)
   const inputRef = useRef(null)
+  const isLoading = useSelector(state => state.channels.isLoading)
 
   const formik = useFormik({
       initialValues: {name: channel.name},
@@ -53,6 +54,7 @@ function RenameModal({ show, onHide, channel }) {
                   required
                   value={formik.values.name}
                   ref={inputRef}
+                  disabled={isLoading}
                   isInvalid={formik.touched.name && !!formik.errors.name}
                   onChange={handleChange}
                   onBlur={formik.handleBlur}
@@ -63,8 +65,8 @@ function RenameModal({ show, onHide, channel }) {
             </Modal.Body>
             <Modal.Footer>
               <div className="d-flex justify-content-end">
-                <Button type="button" variant="secondary" onClick={handleClose}>Отменить</Button>
-                <Button type="submit" variant="primary">Отправить</Button>
+                <Button type="button" variant="secondary" disabled={isLoading} onClick={handleClose}>Отменить</Button>
+                <Button type="submit" variant="primary" disabled={isLoading}>Отправить</Button>
               </div>
             </Modal.Footer>
           </Form>

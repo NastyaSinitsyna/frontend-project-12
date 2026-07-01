@@ -12,6 +12,7 @@ function ChannelsPanel() {
   const dispatch = useDispatch()
 
   const inputRef = useRef(null)
+  const isLoading = useSelector(state => state.channels.isLoading)
 
   useEffect(() => { 
     dispatch(fetchChannels())
@@ -66,6 +67,7 @@ function ChannelsPanel() {
                   value={formik.values.name}
                   ref={inputRef}
                   isInvalid={formik.touched.name && !!formik.errors.name}
+                  disabled={isLoading}
                   onChange={handleChange}
                   onBlur={formik.handleBlur}
                 />
@@ -75,8 +77,8 @@ function ChannelsPanel() {
             </Modal.Body>
             <Modal.Footer>
               <div className="d-flex justify-content-end">
-                <Button type="button" variant="secondary" onClick={handleClose}>Отменить</Button>
-                <Button type="submit" variant="primary">Отправить</Button>
+                <Button type="button" variant="secondary" disabled={isLoading} onClick={handleClose}>Отменить</Button>
+                <Button type="submit" disabled={isLoading} variant="primary">Отправить</Button>
               </div>
             </Modal.Footer>
           </Form>

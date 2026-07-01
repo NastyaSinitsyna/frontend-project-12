@@ -1,10 +1,12 @@
 import { Button, Modal } from 'react-bootstrap'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { removeChannel } from '../store/slices/channelsSlice.js'
 
 function RemoveModal({ show, onHide, channelId }) {
   const dispatch = useDispatch()
+
+  const isLoading = useSelector(state => state.channels.isLoading)
 
   const handleRemove = () => {
     dispatch(removeChannel(channelId))
@@ -24,8 +26,8 @@ function RemoveModal({ show, onHide, channelId }) {
         </Modal.Body>
         <Modal.Footer>
           <div className="d-flex justify-content-end">
-            <Button type="button" variant="secondary" onClick={onHide}>Отменить</Button>
-            <Button type="button" variant="danger" onClick={handleRemove}>Удалить</Button>
+            <Button type="button" variant="secondary" disabled={isLoading} onClick={onHide}>Отменить</Button>
+            <Button type="button" variant="danger" disabled={isLoading} onClick={handleRemove}>Удалить</Button>
           </div>
         </Modal.Footer>
     </Modal>

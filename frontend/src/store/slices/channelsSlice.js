@@ -39,7 +39,7 @@ const channelsAdapter = createEntityAdapter()
 
 const channelsSlice = createSlice({
   name: 'channels',
-  initialState: channelsAdapter.getInitialState({ currentChannelId: null }),
+  initialState: channelsAdapter.getInitialState({ currentChannelId: null, isLoading: false }),
   reducers: {
     setCurrentChannel: (state, action) => {
       state.currentChannelId = action.payload
@@ -63,15 +63,41 @@ const channelsSlice = createSlice({
           state.currentChannelId = state.ids[0] ?? null
         }
       })
-      .addCase(addChannel.fulfilled, channelsAdapter.addOne)
+
+      .addCase(addChannel.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(addChannel.fulfilled, (state, action) => {
+        state.isLoading = false
+        channelsAdapter.addOne(state, action.payload)
+      })
+      .addCase(addChannel.rejected, (state) => {
+        state.isLoading = false
+      })
+
+      .addCase(editChannel.pending, (state) => {
+        state.isLoading = true
+      })
       .addCase(editChannel.fulfilled, (state, action) => {
+        state.isLoading = false
         channelsAdapter.updateOne(state, { id: action.payload.id, changes: action.payload })
       })
+      .addCase(editChannel.rejected, (state) => {
+        state.isLoading = false
+      })
+
+      .addCase(removeChannel.pending, (state) => {
+        state.isLoading = true
+      })
       .addCase(removeChannel.fulfilled, (state, action) => {
+        state.isLoading = false
         channelsAdapter.removeOne(state, action.payload.id)
         if (state.currentChannelId === action.payload.id) {
           state.currentChannelId = state.ids[0] ?? null
         }
+      })
+      .addCase(removeChannel.rejected, (state) => {
+        state.isLoading = false
       })
     }
 })
