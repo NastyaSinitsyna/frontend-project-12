@@ -2,6 +2,7 @@ import axios from 'axios'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 import routes from '../../routes'
+import { storage } from '../../StorageService.js'
 
 export const getToken = createAsyncThunk(
   'authData/getToken', 
@@ -19,8 +20,8 @@ export const getToken = createAsyncThunk(
   }
 )
 
-const token = localStorage.getItem('token')
-const username = localStorage.getItem('username')
+const token = storage.getItem('token')
+const username = storage.getItem('username')
 
 const initialState = {
   token: token || null,
@@ -38,8 +39,8 @@ const authSlice = createSlice({
       state.token = null
       state.username = null
       state.loggedIn = false
-      localStorage.removeItem('token')
-      localStorage.removeItem('username')
+      storage.removeItem('token')
+      storage.removeItem('username')
     },
   },
   extraReducers: (builder) => {
@@ -53,8 +54,8 @@ const authSlice = createSlice({
       state.loggedIn = true
       state.authFailed = false
       state.error = null
-      localStorage.setItem('token', action.payload.token)
-      localStorage.setItem('username', action.payload.username)
+      storage.setItem('token', action.payload.token)
+      storage.setItem('username', action.payload.username)
     })
     builder.addCase(getToken.rejected, (state, action) => {
       state.error = action.payload
