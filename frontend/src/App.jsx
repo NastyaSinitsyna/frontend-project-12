@@ -9,41 +9,12 @@ import AuthorizationPage from './pages/AuthorizationPage.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
 
 import PrivateRoute from './components/PrivateRoute.jsx'
-import { socket } from './socket.js'
-import { messageAdded } from './store/slices/messagesSlice.js'
-import { channelAdded, channelRemoved, channelRenamed } from './store/slices/channelsSlice.js'
-
+import { initSocket } from './socket.js'
 
 const App = () => {
   const dispatch = useDispatch()
 
-  useEffect(() => {
-
-    function onNewMessage(message) {
-      dispatch(messageAdded(message))
-    }
-    function onNewChannel(channel) {
-      dispatch(channelAdded(channel))
-    }
-    function onRemoveChannel(channel) {
-      dispatch(channelRemoved(channel))
-    }
-    function onRenameChannel(channel) {
-      dispatch(channelRenamed(channel))
-    }
-
-    socket.on('newMessage', onNewMessage)
-    socket.on('newChannel', onNewChannel)
-    socket.on('removeChannel', onRemoveChannel)
-    socket.on('renameChannel', onRenameChannel)
-
-    return () => {
-      socket.off('newMessage', onNewMessage)
-      socket.off('newChannel', onNewChannel)
-      socket.off('removeChannel', onRemoveChannel)
-      socket.off('renameChannel', onRenameChannel)
-    }
-  }, [])
+  useEffect(() => {initSocket(dispatch)}, [])
 
   return (
     <BrowserRouter>
