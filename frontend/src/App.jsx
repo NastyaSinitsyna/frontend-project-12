@@ -1,6 +1,6 @@
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Container, Navbar } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 
 import LogOutButton from './components/LogOutButton.jsx'
@@ -8,18 +8,11 @@ import MainPage from './pages/MainPage.jsx'
 import AuthorizationPage from './pages/AuthorizationPage.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
 
+import PrivateRoute from './components/PrivateRoute.jsx'
 import { socket } from './socket.js'
 import { messageAdded } from './store/slices/messagesSlice.js'
 import { channelAdded, channelRemoved, channelRenamed } from './store/slices/channelsSlice.js'
 
-
-const PrivateRoute = ({ children}) => {
-  const loggedIn = useSelector(state => state.authData.loggedIn)
-  const location = useLocation()
-  return(
-    loggedIn ? children : <Navigate to="/login" state={{ from: location}} replace={true} />
-  )
-}
 
 const App = () => {
   const dispatch = useDispatch()
