@@ -4,7 +4,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import routes from '../../routes'
 import { storage } from '../../StorageService.js'
 
-export const getToken = createAsyncThunk(
+export const login = createAsyncThunk(
   'authData/getToken', 
   async (authValues, { rejectWithValue } ) => {
     try {
@@ -44,11 +44,11 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getToken.pending, (state) => {
+    builder.addCase(login.pending, (state) => {
       state.authFailed = false
       state.error = null
     })
-    builder.addCase(getToken.fulfilled, (state, action) => {
+    builder.addCase(login.fulfilled, (state, action) => {
       state.token = action.payload.token
       state.username = action.payload.username
       state.loggedIn = true
@@ -57,7 +57,7 @@ const authSlice = createSlice({
       storage.setItem('token', action.payload.token)
       storage.setItem('username', action.payload.username)
     })
-    builder.addCase(getToken.rejected, (state, action) => {
+    builder.addCase(login.rejected, (state, action) => {
       state.error = action.payload
       state.authFailed = action.payload?.status === 401
     })

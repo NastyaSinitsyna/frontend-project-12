@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { getToken } from '../store/slices/authSlice.js'
+import { login } from '../store/slices/authSlice.js'
 
 function AuthorizationPage() {
   const dispatch = useDispatch()
@@ -23,7 +23,7 @@ function AuthorizationPage() {
     initialValues: { username: "", password: "" },
     onSubmit: async (values) => {
       try {
-        await dispatch(getToken(values)).unwrap()
+        await dispatch(login(values)).unwrap()
         navigate(redirectedPath, { replace: true })
       }
       catch (error) {
