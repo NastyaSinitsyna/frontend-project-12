@@ -15,14 +15,14 @@ function RenameModal({ show, onHide, channel }) {
   const formik = useFormik({
       initialValues: {name: channel.name},
       validationSchema: validChannelSchema(channels),
-      validateOnChange: false,
+      validateOnChange: true,
       validateOnBlur: false,
-      onSubmit: async (values, { resetForm }) => {
+      enableReinitialize: true,
+      onSubmit: async (values) => {
         await dispatch(editChannel({
           editedChannel: values,
           channelId: channel.id
         })).unwrap()
-        resetForm()
         onHide()
       },
     })
