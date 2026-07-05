@@ -1,20 +1,11 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-
-import { fetchChannels, channelsSelectors } from '../store/slices/channelsSlice.js'
+import { useSelector } from 'react-redux'
+import { channelsSelectors } from '../store/slices/channelsSlice.js'
 
 import DefaultChannelButton from './DefaultChannelButton.jsx'
 import NewChannelButton from './NewChannelButton.jsx'
 
 function ChannelsList() {
-  const dispatch = useDispatch()
-
   const channels = useSelector(channelsSelectors.selectAll)
-
-  useEffect(() => { 
-    dispatch(fetchChannels())
-  }, [])
-
 
   return (
     <>
