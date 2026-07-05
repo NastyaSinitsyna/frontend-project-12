@@ -2,7 +2,7 @@ import { Button, Col, Form, Modal } from 'react-bootstrap'
 import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
-import { validChannelSchema } from '../schemas/validationSchemas.js'
+import { validChannelSchema } from '../schemas/validChannelSchemas.js'
 
 import { addChannel, fetchChannels, setCurrentChannel, channelsSelectors } from '../store/slices/channelsSlice.js'
 
