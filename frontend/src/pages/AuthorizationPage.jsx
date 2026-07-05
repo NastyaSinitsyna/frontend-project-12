@@ -39,7 +39,6 @@ function AuthorizationPage() {
           throw error
         }   
       }
-      
     }
   })
 
