@@ -23,7 +23,7 @@ const App = () => {
       <div className="d-flex flex-column vh-100">
         <Navbar className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
          <Container>
-           <Navbar.Brand href="/">Welcome to Chat!</Navbar.Brand>
+           <Navbar.Brand href="/">Hexlet Chat</Navbar.Brand>
            <LogOutButton />
          </Container>
        </Navbar>
