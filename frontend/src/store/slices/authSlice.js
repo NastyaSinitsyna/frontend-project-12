@@ -5,10 +5,26 @@ import routes from '../../routes'
 import { storage } from '../../StorageService.js'
 
 export const login = createAsyncThunk(
-  'authData/getToken', 
+  'authData/login', 
   async (authValues, { rejectWithValue } ) => {
     try {
       const response = await axios.post(routes.loginPath(), authValues)
+      return response.data
+    } 
+    catch(error) {
+      return rejectWithValue({
+        status: error.response?.status,
+        message: error.message
+      })
+    }
+  }
+)
+
+export const signup = createAsyncThunk(
+  'authData/signup', 
+  async (authValues, { rejectWithValue } ) => {
+    try {
+      const response = await axios.post(routes.signupPath(), authValues)
       return response.data
     } 
     catch(error) {
@@ -27,14 +43,19 @@ const initialState = {
   token: token || null,
   username: username || null,
   loggedIn: !!token,
-  authFailed: false,
-  error: null,
 }
 
 const authSlice = createSlice({
   name: 'authData',
   initialState,
   reducers: {
+    logInSuccess: (state, action) => {
+      state.token = action.payload.token
+      state.username = action.payload.username
+      state.loggedIn = true
+      storage.setItem('token', action.payload.token)
+      storage.setItem('username', action.payload.username)
+    },
     logOut: (state) => {
       state.token = null
       state.username = null
@@ -43,27 +64,8 @@ const authSlice = createSlice({
       storage.removeItem('username')
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(login.pending, (state) => {
-      state.authFailed = false
-      state.error = null
-    })
-    builder.addCase(login.fulfilled, (state, action) => {
-      state.token = action.payload.token
-      state.username = action.payload.username
-      state.loggedIn = true
-      state.authFailed = false
-      state.error = null
-      storage.setItem('token', action.payload.token)
-      storage.setItem('username', action.payload.username)
-    })
-    builder.addCase(login.rejected, (state, action) => {
-      state.error = action.payload
-      state.authFailed = action.payload?.status === 401
-    })
-  }
 })
 
-export const { logOut } = authSlice.actions
+export const { logInSuccess, logOut } = authSlice.actions
 
 export default authSlice.reducer
