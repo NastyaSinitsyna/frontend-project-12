@@ -1,10 +1,12 @@
 import { useFormik } from 'formik'
 import { Button, Form } from 'react-bootstrap'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useEffect, useRef } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { login } from '../store/slices/authSlice.js'
+import { logInSuccess } from '../store/slices/authSlice.js'
+
 
 function AuthorizationPage() {
   const dispatch = useDispatch()
@@ -13,7 +15,6 @@ function AuthorizationPage() {
   const location = useLocation()
   const inputRef = useRef()
   const redirectedPath = location.state?.from?.pathname ?? '/'
-  const authFailed = useSelector(state => state.authData.authFailed)
 
   useEffect(() => {
     inputRef.current.focus()
@@ -23,17 +24,31 @@ function AuthorizationPage() {
     initialValues: { username: "", password: "" },
     onSubmit: async (values) => {
       try {
-        await dispatch(login(values)).unwrap()
+        const loginResult = await dispatch(login(values)).unwrap()
+        dispatch(logInSuccess(loginResult))
         navigate(redirectedPath, { replace: true })
       }
       catch (error) {
-        if (error.status !== 401) {
+        if (error.status === 401) {
+          formik.setStatus({
+            authFailed: true,
+            message: 'Неверные имя пользователя или пароль'
+          })
+        }
+        else {
           throw error
-        }       
+        }   
       }
       
     }
   })
+
+  const handleChange = (e) => {
+    if (formik.status?.authFailed) {
+      formik.setStatus(undefined)
+    }
+    formik.handleChange(e)
+  }
 
   return (
       <div className="container-fluid d-flex flex-column justify-content-center align-content-center h-100">
@@ -50,8 +65,8 @@ function AuthorizationPage() {
                   required
                   value={formik.values.username}
                   ref={inputRef}
-                  isInvalid={authFailed}
-                  onChange={formik.handleChange}
+                  isInvalid={formik.status?.authFailed}
+                  onChange={handleChange}
                 />
                 <Form.Label htmlFor="username">Ваш ник</Form.Label>
               </div>
@@ -63,11 +78,11 @@ function AuthorizationPage() {
                   placeholder="Пароль"
                   required
                   value={formik.values.password}
-                  isInvalid={authFailed}
-                  onChange={formik.handleChange}
+                  isInvalid={formik.status?.authFailed}
+                  onChange={handleChange}
                 />
                 <Form.Label htmlFor="password">Пароль</Form.Label>
-                <Form.Control.Feedback type="invalid">Неверные имя пользователя или пароль </Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">{formik.status?.message}</Form.Control.Feedback>
               </div>
               <Button type="submit" disabled={formik.isSubmitting} className="w-100 mb-3 btn btn-primary">Войти</Button>
             </Form>
@@ -75,7 +90,7 @@ function AuthorizationPage() {
           <div className="card-footer p-4">
             <div className="text-center">
               <span>Нет аккаунта?</span>
-              <a href="#">Регистрация</a>
+              <Link to="/signup">Регистрация</Link>
             </div>
           </div>
         </div>
