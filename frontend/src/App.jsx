@@ -2,14 +2,16 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Container, Navbar } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
+import { initSocket } from './socket.js'
 
-import LogOutButton from './components/LogOutButton.jsx'
 import MainPage from './pages/MainPage.jsx'
 import AuthorizationPage from './pages/AuthorizationPage.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
-
 import PrivateRoute from './components/PrivateRoute.jsx'
-import { initSocket } from './socket.js'
+import SignupPage from './pages/SignupPage.jsx'
+
+import LogOutButton from './components/LogOutButton.jsx'
+
 
 const App = () => {
   const dispatch = useDispatch()
@@ -35,6 +37,7 @@ const App = () => {
            )}
          />
           <Route path="/login" element={<AuthorizationPage />} />
+          <Route path="/signup" element={<SignupPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
