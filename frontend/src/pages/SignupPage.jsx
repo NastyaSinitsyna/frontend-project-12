@@ -3,14 +3,14 @@ import { Button, Form } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
-
+import { useTranslation } from 'react-i18next'
 import { logInSuccess, signup } from '../store/slices/authSlice.js'
 import { validUserSchema } from '../schemas/validUserSchema.js'
 
 function SignupPage() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
+  const { t } = useTranslation()
   const inputRef = useRef()
 
 
@@ -37,7 +37,7 @@ function SignupPage() {
         if (error.status === 409) {
           formik.setStatus({
             signupFailed: true,
-            message: 'Такой пользователь уже существует'
+            message: t('errors.userExists')
           })
         }
         else {
@@ -68,13 +68,13 @@ function SignupPage() {
               console.log('submit form')
               formik.handleSubmit(e)
               }} className="mt-3 mt-md-0">
-              <h1 className="text-center mb-4">Регистрация</h1>
+              <h1 className="text-center mb-4">{t('view.signup')}</h1>
               <div className="form-floating mb-3">
                 <Form.Control
                   id="username"
                   type="text"
                   name="username"
-                  placeholder="От 3 до 20 символов"
+                  placeholder={t('errors.nameLength')}
                   required
                   value={formik.values.username}
                   ref={inputRef}
@@ -85,14 +85,14 @@ function SignupPage() {
                   onBlur={formik.handleBlur}
                 />
                 <div className="invalid-tooltip">{formik.errors.username}</div>
-                <Form.Label htmlFor="username">Имя пользователя</Form.Label>
+                <Form.Label htmlFor="username">{t('view.username')}</Form.Label>
               </div>
               <div className="form-floating mb-3">
                 <Form.Control
                   id="password"
                   type="password"
                   name="password"
-                  placeholder="Не менее 6 символов"
+                  placeholder={t('errors.passwordLength')}
                   required
                   value={formik.values.password}
                   isInvalid={formik.status?.signupFailed ||
@@ -102,14 +102,14 @@ function SignupPage() {
                   onBlur={formik.handleBlur}
                 />
                 <div className="invalid-tooltip">{formik.errors.password}</div>
-                <Form.Label htmlFor="password">Пароль</Form.Label>
+                <Form.Label htmlFor="password">{t('view.password')}</Form.Label>
               </div>
               <div className="form-floating mb-3">
                 <Form.Control
                   id="confirmPassword"
                   type="password"
                   name="confirmPassword"
-                  placeholder="Пароли должны совпадать"
+                  placeholder={t('errors.passwordMatch')}
                   required
                   value={formik.values.confirmPassword}
                   isInvalid={formik.status?.signupFailed ||
@@ -119,10 +119,10 @@ function SignupPage() {
                   onBlur={formik.handleBlur}
                 />
                 <div className="invalid-tooltip">{formik.errors.confirmPassword || formik.status?.message}</div>
-                <Form.Label htmlFor="confirmPassword">Подтвердите пароль</Form.Label>
+                <Form.Label htmlFor="confirmPassword">{t('actions.confirmPassword')}</Form.Label>
                 {/* <Form.Control.Feedback type="invalid">{formik.status?.message}</Form.Control.Feedback> */}
               </div>
-              <Button type="submit" disabled={formik.isSubmitting} className="w-100 mb-3 btn btn-primary">Зарегистрироваться</Button>
+              <Button type="submit" disabled={formik.isSubmitting} className="w-100 mb-3 btn btn-primary">{t('actions.signup')}</Button>
             </Form>
           </div>
         </div>
