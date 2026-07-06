@@ -1,17 +1,18 @@
 import * as yup from 'yup'
+import i18nextInstance from '../i18n.js'
 
 export const validUserSchema = () => yup.object().shape({
     username: yup
       .string()
-      .min(3, 'От 3 до 20 символов')
-      .max(20, 'От 3 до 20 символов')
-      .required('Обязательное поле'),
+      .min(3, i18nextInstance.t('errors.nameLength'))
+      .max(20, i18nextInstance.t('errors.nameLength'))
+      .required(),
     password: yup
       .string()
-      .min(6, 'Не менее 6 символов')
-      .required('Обязательное поле'),
+      .min(6, i18nextInstance.t('errors.passwordLength'))
+      .required(),
     confirmPassword: yup
       .string()
-      .oneOf([yup.ref('password')], 'Пароли должны совпадать')
-      .required('Обязательное поле'),
+      .oneOf([yup.ref('password')])
+      .required(),
   })
