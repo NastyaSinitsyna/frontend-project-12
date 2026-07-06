@@ -1,7 +1,7 @@
 import { Button, ButtonGroup, Dropdown } from 'react-bootstrap'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
+import { useTranslation } from 'react-i18next'
 import { setCurrentChannel } from '../store/slices/channelsSlice.js'
 import { toggleButtonVariant } from '../utilities.js'
 import RemoveModal from './RemoveModal.jsx'
@@ -9,6 +9,7 @@ import RenameModal from './RenameModal.jsx'
 
 function NewChannelButton({ channel }) {
   const dispatch = useDispatch()
+  const { t } = useTranslation()
   const currentChannelId = useSelector(state => state.channels.currentChannelId)
 
   const [showRemove, setShowRemove] = useState(false)
@@ -25,8 +26,8 @@ function NewChannelButton({ channel }) {
       </Button>
       <Dropdown.Toggle split variant={toggleButtonVariant(channel.id, currentChannelId)} id="dropdown-split-basic" />
       <Dropdown.Menu>
-        <Dropdown.Item onClick={() => setShowRemove(true)}>Удалить</Dropdown.Item>
-        <Dropdown.Item onClick={() => setShowRename(true)}>Переименовать</Dropdown.Item>
+        <Dropdown.Item onClick={() => setShowRemove(true)}>{t('actions.remove')}</Dropdown.Item>
+        <Dropdown.Item onClick={() => setShowRename(true)}>{t('actions.rename')}</Dropdown.Item>
       </Dropdown.Menu>
 
       <RemoveModal show={showRemove} onHide={() => setShowRemove(false)} channelId={channel.id} />
