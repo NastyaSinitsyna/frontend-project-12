@@ -1,12 +1,14 @@
 import { Button, Col } from 'react-bootstrap'
 import { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 
 import { channelsSelectors } from '../store/slices/channelsSlice.js'
 import { addMessage, fetchMessages, messagesSelectors } from '../store/slices/messagesSlice.js'
 
 function MessagesPanel() {
   const dispatch = useDispatch()
+  const { t } = useTranslation()
 
   const currentChannelId = useSelector(state => state.channels.currentChannelId)
   const currentChannel = useSelector(state => channelsSelectors.selectById(state, currentChannelId))
@@ -14,6 +16,7 @@ function MessagesPanel() {
   const currentUser = useSelector(state => state.authData.username)
   const currentMessages = useSelector(messagesSelectors.selectAll)
     .filter((message) => message.channelId === currentChannelId)
+  const messagesCount = currentMessages.length
 
   const isLoading = useSelector(state => state.messages.isLoading)
 
@@ -43,9 +46,9 @@ function MessagesPanel() {
       <div className="d-flex flex-column h-100">
         <div className="bg-light mb-4 p-3 shadow-sm small">
           <p className="m-0">
-            <b>{currentChannel?.name ?? 'Название канала'}</b>
+            <b>{currentChannel?.name ?? t('view.channelName')}</b>
           </p>
-          <span className="text-muted">Количество сообщений</span>
+          <span className="text-muted">{t('view.message', { count: messagesCount })}</span>
         </div>
         <div id="messages-box" className="chat-messages overflow-auto px-5 flex-grow-1">
           {currentMessages.map((message) => {
@@ -67,15 +70,15 @@ function MessagesPanel() {
             <div className="d-flex gap-2">
               <input
                 name="body"
-                aria-label="Новое сообщение"
-                placeholder="Введите сообщение..."
+                aria-label={t('view.newMessage')}
+                placeholder={t('actions.typeMessage')}
                 className="border-0 p-0 ps-2 form-control"
                 value={messageBody}
                 ref={inputRef}
                 disabled={isLoading}
                 onChange={(e) => setMessageBody(e.target.value)}
               />
-              <Button type="submit" disabled={!messageBody || isLoading}>Отправить</Button>
+              <Button type="submit" disabled={!messageBody || isLoading}>{t('actions.send')}</Button>
             </div>
           </form>
         </div>
