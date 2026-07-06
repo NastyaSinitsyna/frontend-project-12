@@ -2,15 +2,15 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Container, Navbar } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
-import { initSocket } from './socket.js'
+import { initSocket } from '../socket.js'
 
-import MainPage from './pages/MainPage.jsx'
-import AuthorizationPage from './pages/AuthorizationPage.jsx'
-import NotFoundPage from './pages/NotFoundPage.jsx'
-import PrivateRoute from './components/PrivateRoute.jsx'
-import SignupPage from './pages/SignupPage.jsx'
+import MainPage from '../pages/MainPage.jsx'
+import AuthorizationPage from '../pages/AuthorizationPage.jsx'
+import NotFoundPage from '../pages/NotFoundPage.jsx'
+import PrivateRoute from './PrivateRoute.jsx'
+import SignupPage from '../pages/SignupPage.jsx'
 
-import LogOutButton from './components/LogOutButton.jsx'
+import LogOutButton from './LogOutButton.jsx'
 
 
 const App = () => {
