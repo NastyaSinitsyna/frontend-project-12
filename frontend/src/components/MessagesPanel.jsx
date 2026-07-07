@@ -2,7 +2,7 @@ import { Button, Col } from 'react-bootstrap'
 import { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
-
+import { toast } from 'react-toastify'
 import { channelsSelectors } from '../store/slices/channelsSlice.js'
 import { addMessage, fetchMessages, messagesSelectors } from '../store/slices/messagesSlice.js'
 
@@ -26,7 +26,13 @@ function MessagesPanel() {
 
   useEffect(() => {
     inputRef.current.focus()
-    dispatch(fetchMessages())
+    try {
+      dispatch(fetchMessages())
+    }
+    catch (error) {
+      toast.error(t('errors.connection'))
+      throw error
+    }
   }, [])
 
   const handleSubmit = async (e) => {
@@ -36,8 +42,14 @@ function MessagesPanel() {
       channelId: currentChannelId,
       username: currentUser,
     }
-    dispatch(addMessage(newMessage))
+    try {
+      dispatch(addMessage(newMessage))
       setMessageBody('')
+    }
+    catch (error) {
+      toast.error(t('errors.connection'))
+      throw error
+    }
   }
   
 
