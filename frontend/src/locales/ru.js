@@ -22,6 +22,12 @@ export default {
       passwordMatch: 'Пароли должны совпадать',
       required: 'Обязательное поле',
       unique: 'Должно быть уникальным',
+      connection: 'Ошибка соединения'
+    },
+    messages: {
+      channelAdded: 'Канал создан',
+      channelRenamed: 'Канал переименован',
+      channelRemoved: 'Канал удален'
     },
     view: {
       brand: 'Hexlet Chat',
