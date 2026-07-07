@@ -9,7 +9,7 @@ import AuthorizationPage from '../pages/AuthorizationPage.jsx'
 import NotFoundPage from '../pages/NotFoundPage.jsx'
 import PrivateRoute from './PrivateRoute.jsx'
 import SignupPage from '../pages/SignupPage.jsx'
-
+import { ToastContainer } from 'react-toastify'
 import LogOutButton from './LogOutButton.jsx'
 
 
@@ -40,6 +40,7 @@ const App = () => {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
+        <ToastContainer />
       </div>
     </BrowserRouter>
   )
