@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { logInSuccess, signup } from '../store/slices/authSlice.js'
 import { validUserSchema } from '../schemas/validUserSchema.js'
+import { toast } from 'react-toastify'
 
 function SignupPage() {
   const dispatch = useDispatch()
@@ -33,7 +34,6 @@ function SignupPage() {
         navigate('/', { replace: true })
       }
       catch (error) {
-        console.log('submit error')
         if (error.status === 409) {
           formik.setStatus({
             signupFailed: true,
@@ -41,7 +41,7 @@ function SignupPage() {
           })
         }
         else {
-          throw error
+          toast.error(t('errors.connection'))
         }         
       }
       
