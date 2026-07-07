@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { channelsSelectors } from '../store/slices/channelsSlice.js'
 import { addMessage, fetchMessages, messagesSelectors } from '../store/slices/messagesSlice.js'
+import filter from '../filter.js'
 
 function MessagesPanel() {
   const dispatch = useDispatch()
@@ -68,7 +69,7 @@ function MessagesPanel() {
               <div key={message.id} className="text-break mb-2">
                 <b>{message.username}</b>
                 {": "}
-                {message.body}
+                {filter(message.body)}
               </div>
             )
           }

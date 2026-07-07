@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { setCurrentChannel } from '../store/slices/channelsSlice.js'
 import { toggleButtonVariant } from '../utilities.js'
+import filter from '../filter.js'
 import RemoveModal from './RemoveModal.jsx'
 import RenameModal from './RenameModal.jsx'
 
@@ -22,7 +23,7 @@ function NewChannelButton({ channel }) {
         className="flex-grow-1 text-start text-truncate"
         onClick={() => dispatch(setCurrentChannel(channel.id))}>
         <span className="me-1">#</span>
-        {channel.name}
+        {filter(channel.name)}
       </Button>
       <Dropdown.Toggle split variant={toggleButtonVariant(channel.id, currentChannelId)} id="dropdown-split-basic" />
       <Dropdown.Menu>
