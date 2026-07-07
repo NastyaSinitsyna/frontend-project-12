@@ -24,6 +24,7 @@ export default {
       unique: 'Должно быть уникальным',
     },
     view: {
+      brand: 'Hexlet Chat',
       yourNickname: 'Ваш ник',
       username: 'Имя пользователя',
       password: 'Пароль',
