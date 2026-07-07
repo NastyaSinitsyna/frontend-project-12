@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 import { validChannelSchema } from '../schemas/validChannelSchemas.js'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
 import { addChannel, fetchChannels, setCurrentChannel, channelsSelectors } from '../store/slices/channelsSlice.js'
 
@@ -17,7 +18,13 @@ function ChannelsPanel() {
   const isLoading = useSelector(state => state.channels.isLoading)
 
   useEffect(() => { 
-    dispatch(fetchChannels())
+    try {
+      dispatch(fetchChannels())
+    }
+    catch (error) {
+      toast.error(t('errors.connection'))
+      throw error
+    }
   }, [])
 
   const channels = useSelector(channelsSelectors.selectAll)
@@ -29,10 +36,17 @@ function ChannelsPanel() {
     validateOnChange: false,
     validateOnBlur: false,
     onSubmit: async (values, { resetForm }) => {
-      const newChannel = await dispatch(addChannel(values)).unwrap()
-      resetForm()
-      dispatch(setCurrentChannel(newChannel.id))
-      setShow(false)
+      try {
+        const newChannel = await dispatch(addChannel(values)).unwrap()
+        resetForm()
+        dispatch(setCurrentChannel(newChannel.id))
+        setShow(false)
+        toast.success(t('messages.channelAdded'))
+      }
+      catch (error) {
+        toast.error(t('errors.connection'))
+        throw error
+      }
     },
   })
 

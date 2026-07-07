@@ -4,7 +4,7 @@ import { useRef } from 'react'
 import { useFormik } from 'formik'
 import { useTranslation } from 'react-i18next'
 import { validChannelSchema } from '../schemas/validChannelSchemas.js'
-
+import { toast } from 'react-toastify'
 import { editChannel, channelsSelectors } from '../store/slices/channelsSlice.js'
 
 function RenameModal({ show, onHide, channel }) {
@@ -21,11 +21,18 @@ function RenameModal({ show, onHide, channel }) {
       validateOnBlur: false,
       enableReinitialize: true,
       onSubmit: async (values) => {
-        await dispatch(editChannel({
-          editedChannel: values,
-          channelId: channel.id
-        })).unwrap()
-        onHide()
+        try {
+          await dispatch(editChannel({
+            editedChannel: values,
+            channelId: channel.id
+          })).unwrap()
+          onHide()
+          toast.success(t('messages.channelRenamed'))
+        }
+        catch (error) {
+          toast.error(t('errors.connection'))
+          throw error
+        }
       },
     })
   

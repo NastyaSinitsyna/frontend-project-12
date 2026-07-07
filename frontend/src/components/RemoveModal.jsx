@@ -2,6 +2,7 @@ import { Button, Modal } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { removeChannel } from '../store/slices/channelsSlice.js'
+import { toast } from 'react-toastify'
 
 function RemoveModal({ show, onHide, channelId }) {
   const dispatch = useDispatch()
@@ -9,8 +10,15 @@ function RemoveModal({ show, onHide, channelId }) {
   const isLoading = useSelector(state => state.channels.isLoading)
 
   const handleRemove = () => {
-    dispatch(removeChannel(channelId))
-    onHide()
+    try {
+      dispatch(removeChannel(channelId))
+      onHide()
+      toast.success(t('messages.channelRemoved'))
+    }
+    catch (error) {
+      toast.error(t('errors.connection'))
+      throw error
+    }
   }
   
   return (
