@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { login } from '../store/slices/authSlice.js'
 import { logInSuccess } from '../store/slices/authSlice.js'
+import { toast } from 'react-toastify'
 
 
 function AuthorizationPage() {
@@ -36,7 +37,7 @@ function AuthorizationPage() {
           })
         }
         else {
-          throw error
+          toast.error(t('errors.connection'))
         }   
       }
     }
