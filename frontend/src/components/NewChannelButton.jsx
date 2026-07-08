@@ -15,12 +15,12 @@ function NewChannelButton({ channel }) {
 
   const [showRemove, setShowRemove] = useState(false)
   const [showRename, setShowRename] = useState(false)
-  
+
   return (
     <Dropdown as={ButtonGroup} className="w-100">
       <Button
         variant={toggleButtonVariant(channel.id, currentChannelId)}
-        className="flex-grow-1 text-start text-truncate"
+        className="w-100 rounded-0 text-start text-truncate"
         onClick={() => dispatch(setCurrentChannel(channel.id))}>
         <span className="me-1">#</span>
         {filter(channel.name)}
