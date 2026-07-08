@@ -65,7 +65,7 @@ function ChannelsPanel() {
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-3">
         <b>{t('view.channels')}</b>
         <Button variant="primary" onClick={() => setShow(true)}>
-          +
+          {t('view.addChannelButton')}
         </Button>
         <Modal show={show} onHide={handleClose} onEntered={() => inputRef.current?.select()}>
           <Form onSubmit={formik.handleSubmit}>
