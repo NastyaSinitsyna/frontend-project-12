@@ -25,7 +25,9 @@ function NewChannelButton({ channel }) {
         <span className="me-1">#</span>
         {filter(channel.name)}
       </Button>
-      <Dropdown.Toggle split variant={toggleButtonVariant(channel.id, currentChannelId)} id="dropdown-split-basic" />
+      <Dropdown.Toggle split variant={toggleButtonVariant(channel.id, currentChannelId)} id="dropdown-split-basic">
+        <span className="visually-hidden">{t('view.channelManagement')}</span>
+      </Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Item onClick={() => setShowRemove(true)}>{t('actions.remove')}</Dropdown.Item>
         <Dropdown.Item onClick={() => setShowRename(true)}>{t('actions.rename')}</Dropdown.Item>
