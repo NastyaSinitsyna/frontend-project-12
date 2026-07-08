@@ -17,7 +17,7 @@ const App = () => {
   const dispatch = useDispatch()
   const { t } = useTranslation()
   useEffect(() => {initSocket(dispatch)}, [])
-
+  
   return (
     <BrowserRouter>
       <div className="d-flex flex-column vh-100">
