@@ -16,7 +16,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx start-server -s ./frontend/dist"
+    "start": "npx start-server -s ./frontend/dist",
+    "postinstall": "cd frontend && npm ci"
   },
   "dependencies": {
     "@hexlet/chat-server": "^2.0.4"

@@ -1,6 +1,9 @@
 build-frontend:
 	make -C frontend build
 
+install:
+	npm ci
+
 start-backend:
 	npm run start
 
