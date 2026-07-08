@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Link, Routes, Route } from 'react-router-dom'
 import { Container, Navbar } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
@@ -23,7 +23,7 @@ const App = () => {
       <div className="d-flex flex-column vh-100">
         <Navbar className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
          <Container>
-           <Navbar.Brand href="/">{t('view.brand')}</Navbar.Brand>
+           <Navbar.Brand as={Link} to="/">{t('view.brand')}</Navbar.Brand>
            <LogOutButton />
          </Container>
        </Navbar>
