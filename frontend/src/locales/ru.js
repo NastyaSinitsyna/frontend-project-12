@@ -22,7 +22,9 @@ export default {
       passwordMatch: 'Пароли должны совпадать',
       required: 'Обязательное поле',
       unique: 'Должно быть уникальным',
-      connection: 'Ошибка соединения'
+      connection: 'Ошибка соединения',
+      messageHeader: 'Что-то пошло не так',
+      messageBody: 'Мы пытаемся все починить'
     },
     messages: {
       channelAdded: 'Канал создан',
