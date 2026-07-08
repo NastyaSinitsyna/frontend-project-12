@@ -33,6 +33,8 @@ export default {
     },
     view: {
       brand: 'Hexlet Chat',
+      addChannelButton: '+',
+      channelManagement: 'Управление каналом',
       yourNickname: 'Ваш ник',
       username: 'Имя пользователя',
       password: 'Пароль',
