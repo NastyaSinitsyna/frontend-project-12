@@ -1,4 +1,4 @@
-build-frontend:
+build:
 	make -C frontend build
 
 install:
@@ -6,7 +6,7 @@ install:
 
 lint-frontend:
 	make -C frontend lint
-	
+
 start-backend:
 	npm run start
 
@@ -14,4 +14,4 @@ start-frontend:
 	make -C frontend start
 
 start:
-	make start-backend & make start-frontend
+	npm start
