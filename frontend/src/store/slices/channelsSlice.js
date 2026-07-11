@@ -67,8 +67,9 @@ const channelsSlice = createSlice({
       .addCase(addChannel.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(addChannel.fulfilled, (state) => {
+      .addCase(addChannel.fulfilled, (state, action) => {
         state.isLoading = false
+        channelsAdapter.addOne(state, action.payload)
       })
       .addCase(addChannel.rejected, (state) => {
         state.isLoading = false
@@ -77,8 +78,9 @@ const channelsSlice = createSlice({
       .addCase(editChannel.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(editChannel.fulfilled, (state) => {
+      .addCase(editChannel.fulfilled, (state, action) => {
         state.isLoading = false
+        channelsAdapter.updateOne(state, { id: action.payload.id, changes: action.payload })
       })
       .addCase(editChannel.rejected, (state) => {
         state.isLoading = false
@@ -87,8 +89,12 @@ const channelsSlice = createSlice({
       .addCase(removeChannel.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(removeChannel.fulfilled, (state) => {
+      .addCase(removeChannel.fulfilled, (state, action) => {
         state.isLoading = false
+        channelsAdapter.removeOne(state, action.payload.id)
+        if (state.currentChannelId === action.payload.id) {
+          state.currentChannelId = state.ids[0] ?? null
+        }
       })
       .addCase(removeChannel.rejected, (state) => {
         state.isLoading = false
