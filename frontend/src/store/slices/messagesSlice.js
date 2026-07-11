@@ -43,8 +43,9 @@ const messagesSlice = createSlice({
       .addCase(addMessage.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(addMessage.fulfilled, (state) => {
+      .addCase(addMessage.fulfilled, (state, action) => {
         state.isLoading = false
+        messagesAdapter.addOnestate(action.payload)
       })
       .addCase(addMessage.rejected, (state) => {
         state.isLoading = false
