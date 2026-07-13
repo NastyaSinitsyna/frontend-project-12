@@ -67,7 +67,7 @@ function ChannelsPanel() {
         <Button variant="primary" onClick={() => setShow(true)}>
           {t('view.addChannelButton')}
         </Button>
-        <Modal show={show} onHide={handleClose} onEntered={() => inputRef.current?.select()}>
+        <Modal show={show} onHide={handleClose} onEntered={() => inputRef.current?.focus()}>
           <Form onSubmit={formik.handleSubmit}>
             <Modal.Header closeButton>
               <Modal.Title>{t('actions.addChannel')}</Modal.Title>
