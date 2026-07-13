@@ -29,7 +29,7 @@ export default {
     messages: {
       channelAdded: 'Канал создан',
       channelRenamed: 'Канал переименован',
-      channelRemoved: 'Канал удален'
+      channelRemoved: 'Канал удалён'
     },
     view: {
       brand: 'Hexlet Chat',
