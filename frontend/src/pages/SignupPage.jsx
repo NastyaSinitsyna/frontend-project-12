@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { logInSuccess, signup } from '../store/slices/authSlice.js'
 import { validUserSchema } from '../schemas/validUserSchema.js'
+import { storage } from '../StorageService.js'
 import { toast } from 'react-toastify'
 
 function SignupPage() {
@@ -29,6 +30,8 @@ function SignupPage() {
       try {
         const signupResult = await dispatch(signup({ username, password })).unwrap()
         dispatch(logInSuccess(signupResult))
+        storage.setItem('token', signupResult.token)
+        storage.setItem('username', signupResult.username)
         navigate('/', { replace: true })
       }
       catch (error) {
