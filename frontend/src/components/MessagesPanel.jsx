@@ -27,13 +27,18 @@ function MessagesPanel() {
 
   useEffect(() => {
     inputRef.current.focus()
-    try {
-      dispatch(fetchMessages())
+    
+    const loadMessage = async () => {
+      try {
+        await dispatch(fetchMessages()).unwrap()
+      }
+      catch (error) {
+        toast.error(t('errors.connection'))
+        throw error
+      }
     }
-    catch (error) {
-      toast.error(t('errors.connection'))
-      throw error
-    }
+    
+    loadMessage()
   }, [])
 
   const handleSubmit = async (e) => {
