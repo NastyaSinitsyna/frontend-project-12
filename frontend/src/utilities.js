@@ -1,5 +1,7 @@
+import { storage } from './StorageService.js'
+
 export const getAuthHeader = () => {
-  const token = localStorage.getItem('token')
+  const token = storage.getItem('token')
   if (token) {
     return { Authorization: `Bearer ${token}` }
   }
