@@ -2,7 +2,7 @@ import { useFormik } from 'formik'
 import { Button, Form } from 'react-bootstrap'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useEffect, useRef } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { login } from '../store/slices/authSlice.js'
 import { logInSuccess } from '../store/slices/authSlice.js'
@@ -17,8 +17,6 @@ function AuthorizationPage() {
   const location = useLocation()
   const inputRef = useRef()
   const redirectedPath = location.state?.from?.pathname ?? '/'
-  const token = useSelector(state => state.authData.token)
-  const username = useSelector(state => state.authData.token)
 
   useEffect(() => {
     inputRef.current.focus()
@@ -30,8 +28,8 @@ function AuthorizationPage() {
       try {
         const loginResult = await dispatch(login(values)).unwrap()
         dispatch(logInSuccess(loginResult))
-        storage.setItem('token', token)
-        storage.setItem('username', username)
+        storage.setItem('token', loginResult.token)
+        storage.setItem('username', loginResult.username)
         navigate(redirectedPath, { replace: true })
       }
       catch (error) {
