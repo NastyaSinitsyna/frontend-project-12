@@ -11,7 +11,7 @@ import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 
-import App from './components/App.jsx'
+import App from './app/App.jsx'
 import store from './store/index.js'
 
 createRoot(document.getElementById('root')).render(
