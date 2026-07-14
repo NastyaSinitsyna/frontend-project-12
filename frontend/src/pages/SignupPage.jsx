@@ -25,12 +25,10 @@ function SignupPage() {
     validateOnChange: true,
     validateOnBlur: true,
     onSubmit: async (values) => {
-      console.log('submit start')
       const { username, password } = values
       try {
         const signupResult = await dispatch(signup({ username, password })).unwrap()
         dispatch(logInSuccess(signupResult))
-        console.log('submit success')
         navigate('/', { replace: true })
       }
       catch (error) {
@@ -49,23 +47,17 @@ function SignupPage() {
   })
 
   const handleChange = (e) => {
-    console.log(e.target.name, e.target.value)
     if (formik.status?.authFailed) {
       formik.setStatus(undefined)
     }
     formik.handleChange(e)
   }
 
-  console.log(formik.errors)
-  console.log(formik.values)
-  console.log(formik.isValid)
-
   return (
       <div className="container-fluid d-flex flex-column justify-content-center align-content-center h-100">
         <div className="card shadow-sm">
           <div className="card-body row p-5">
             <Form onSubmit={(e) => {
-              console.log('submit form')
               formik.handleSubmit(e)
               }} className="mt-3 mt-md-0">
               <h1 className="text-center mb-4">{t('view.signup')}</h1>
