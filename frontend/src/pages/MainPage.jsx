@@ -14,13 +14,17 @@ function MainPage() {
   const { t } = useTranslation()
 
   useEffect(() => { 
-    try {
-      dispatch(fetchChannels())
+    const loadChannels = async () => {
+      try {
+        await dispatch(fetchChannels()).unwrap()
+      }
+      catch (error) {
+        toast.error(t('errors.connection'))
+        throw error
+      }
     }
-    catch (error) {
-      toast.error(t('errors.connection'))
-      throw error
-    }
+    
+    loadChannels()
   }, [])
 
   useEffect(() => {      
