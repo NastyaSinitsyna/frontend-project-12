@@ -53,15 +53,11 @@ const authSlice = createSlice({
       state.token = action.payload.token
       state.username = action.payload.username
       state.loggedIn = true
-      storage.setItem('token', action.payload.token)
-      storage.setItem('username', action.payload.username)
     },
     logOut: (state) => {
       state.token = null
       state.username = null
       state.loggedIn = false
-      storage.removeItem('token')
-      storage.removeItem('username')
     },
   },
 })
