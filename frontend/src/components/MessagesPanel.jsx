@@ -44,7 +44,7 @@ function MessagesPanel() {
       username: currentUser,
     }
     try {
-      dispatch(addMessage(newMessage))
+      await dispatch(addMessage(newMessage)).unwrap()
       setMessageBody('')
     }
     catch (error) {
