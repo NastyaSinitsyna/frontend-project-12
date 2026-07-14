@@ -1,12 +1,12 @@
 import { Button, Col, Form, Modal } from 'react-bootstrap'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 import { validChannelSchema } from '../schemas/validChannelSchemas.js'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { addChannel, fetchChannels, setCurrentChannel, channelsSelectors } from '../store/slices/channelsSlice.js'
+import { addChannel, setCurrentChannel, channelsSelectors } from '../store/slices/channelsSlice.js'
 
 import ChannelsList from './ChannelsList.jsx'
 
@@ -16,16 +16,6 @@ function ChannelsPanel() {
 
   const inputRef = useRef(null)
   const isLoading = useSelector(state => state.channels.isLoading)
-
-  useEffect(() => { 
-    try {
-      dispatch(fetchChannels())
-    }
-    catch (error) {
-      toast.error(t('errors.connection'))
-      throw error
-    }
-  }, [])
 
   const channels = useSelector(channelsSelectors.selectAll)
   const [show, setShow] = useState(false)
