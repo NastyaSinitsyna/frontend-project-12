@@ -14,32 +14,19 @@ function MainPage() {
   const { t } = useTranslation()
 
   useEffect(() => { 
-    const loadChannels = async () => {
+    const loadData = async () => {
       try {
         await dispatch(fetchChannels()).unwrap()
+        await dispatch(fetchMessages()).unwrap()
       }
       catch (error) {
         toast.error(t('errors.connection'))
         throw error
       }
     }
-    
-    loadChannels()
-  }, [])
 
-  useEffect(() => {      
-      const loadMessage = async () => {
-        try {
-          await dispatch(fetchMessages()).unwrap()
-        }
-        catch (error) {
-          toast.error(t('errors.connection'))
-          throw error
-        }
-      }
-      
-      loadMessage()
-    }, [])
+    loadData()
+  }, [])
 
   return (
     <Container className="flex-grow-1 overflow-hidden rounded shadow">
