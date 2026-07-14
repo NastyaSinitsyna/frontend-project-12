@@ -9,9 +9,9 @@ function RemoveModal({ show, onHide, channelId }) {
   const { t } = useTranslation()
   const isLoading = useSelector(state => state.channels.isLoading)
 
-  const handleRemove = () => {
+  const handleRemove = async () => {
     try {
-      dispatch(removeChannel(channelId))
+      await dispatch(removeChannel(channelId)).unwrap()
       onHide()
       toast.success(t('messages.channelRemoved'))
     }
