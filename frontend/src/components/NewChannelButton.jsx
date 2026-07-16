@@ -1,20 +1,23 @@
 import { Button, ButtonGroup, Dropdown } from 'react-bootstrap'
-import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { setCurrentChannel } from '../store/slices/channelsSlice.js'
 import { toggleButtonVariant } from '../utilities.js'
 import filter from '../filter.js'
-import RemoveModal from './RemoveModal.jsx'
-import RenameModal from './RenameModal.jsx'
+import { showModal } from '../store/slices/modalSlice.js'
 
 function NewChannelButton({ channel }) {
   const dispatch = useDispatch()
   const { t } = useTranslation()
   const currentChannelId = useSelector(state => state.channels.currentChannelId)
 
-  const [showRemove, setShowRemove] = useState(false)
-  const [showRename, setShowRename] = useState(false)
+  const handleModal = (type) => {
+    dispatch(showModal({
+      type,
+      show: true,
+      channel: channel
+    }))
+  }
 
   return (
     <Dropdown as={ButtonGroup} className="w-100">
@@ -29,13 +32,9 @@ function NewChannelButton({ channel }) {
         <span className="visually-hidden">{t('view.channelManagement')}</span>
       </Dropdown.Toggle>
       <Dropdown.Menu>
-        <Dropdown.Item onClick={() => setShowRemove(true)}>{t('actions.remove')}</Dropdown.Item>
-        <Dropdown.Item onClick={() => setShowRename(true)}>{t('actions.rename')}</Dropdown.Item>
+        <Dropdown.Item onClick={() => handleModal('remove')}>{t('actions.remove')}</Dropdown.Item>
+        <Dropdown.Item onClick={() => handleModal('rename')}>{t('actions.rename')}</Dropdown.Item>
       </Dropdown.Menu>
-
-      <RemoveModal show={showRemove} onHide={() => setShowRemove(false)} channelId={channel.id} />
-      <RenameModal show={showRename} onHide={() => setShowRename(false)} channel={channel}/>
-    
     </Dropdown>
   )
 }
