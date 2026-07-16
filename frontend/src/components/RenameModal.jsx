@@ -6,13 +6,15 @@ import { useTranslation } from 'react-i18next'
 import { validChannelSchema } from '../schemas/validChannelSchemas.js'
 import { toast } from 'react-toastify'
 import { editChannel, channelsSelectors } from '../store/slices/channelsSlice.js'
+import { hideModal } from '../store/slices/modalSlice.js'
 
-function RenameModal({ show, onHide, channel }) {
+function RenameModal() {
   const dispatch = useDispatch()
   const { t } = useTranslation()
   const channels = useSelector(channelsSelectors.selectAll)
   const inputRef = useRef(null)
   const isLoading = useSelector(state => state.channels.isLoading)
+  const { show, channel } = useSelector(state => state.modal)
 
   const formik = useFormik({
       initialValues: {name: channel.name},
@@ -26,7 +28,7 @@ function RenameModal({ show, onHide, channel }) {
             editedChannel: values,
             channelId: channel.id
           })).unwrap()
-          onHide()
+          dispatch(hideModal())
           toast.success(t('messages.channelRenamed'))
         }
         catch (error) {
@@ -43,7 +45,7 @@ function RenameModal({ show, onHide, channel }) {
   
     const handleClose = () => {
       formik.resetForm()
-      onHide()
+      dispatch(hideModal())
     }
   
   return (
