@@ -11,6 +11,7 @@ import PrivateRoute from '../components/PrivateRoute.jsx'
 import SignupPage from '../pages/SignupPage.jsx'
 import { ToastContainer } from 'react-toastify'
 import LogOutButton from '../components/LogOutButton.jsx'
+import Modal from '../components/Modal.jsx'
 
 
 const App = () => {
@@ -40,6 +41,7 @@ const App = () => {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
+        <Modal />
         <ToastContainer />
       </div>
     </BrowserRouter>
