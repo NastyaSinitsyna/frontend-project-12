@@ -40,9 +40,8 @@ function MessagesPanel() {
       await dispatch(addMessage(newMessage)).unwrap()
       setMessageBody('')
     }
-    catch (error) {
+    catch {
       toast.error(t('errors.connection'))
-      throw error
     }
   }
   
