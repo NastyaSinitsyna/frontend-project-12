@@ -13,16 +13,13 @@ function MainPage() {
   const dispatch = useDispatch()
   const { t } = useTranslation()
 
+
   useEffect(() => { 
     const loadData = async () => {
-      try {
-        await dispatch(fetchChannels()).unwrap()
-        await dispatch(fetchMessages()).unwrap()
-      }
-      catch (error) {
-        toast.error(t('errors.connection'))
-        throw error
-      }
+      await Promise.all([
+        dispatch(fetchChannels()).unwrap(),
+        dispatch(fetchMessages()).unwrap()
+      ]).catch(() => toast.error(t('errors.connection')))
     }
 
     loadData()
