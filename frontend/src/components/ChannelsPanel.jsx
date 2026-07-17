@@ -33,9 +33,8 @@ function ChannelsPanel() {
         setShow(false)
         toast.success(t('messages.channelAdded'))
       }
-      catch (error) {
+      catch {
         toast.error(t('errors.connection'))
-        throw error
       }
     },
   })
