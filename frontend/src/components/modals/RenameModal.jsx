@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useRef } from 'react' 
 import { useFormik } from 'formik'
 import { useTranslation } from 'react-i18next'
-import { validChannelSchema } from '../schemas/validChannelSchemas.js'
+import { validChannelSchema } from '../../schemas/validChannelSchemas.js'
 import { toast } from 'react-toastify'
-import { editChannel, channelsSelectors } from '../store/slices/channelsSlice.js'
-import { hideModal } from '../store/slices/modalSlice.js'
+import { editChannel, channelsSelectors } from '../../store/slices/channelsSlice.js'
+import { hideModal } from '../../store/slices/modalSlice.js'
 
 function RenameModal() {
   const dispatch = useDispatch()

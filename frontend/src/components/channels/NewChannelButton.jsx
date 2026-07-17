@@ -1,10 +1,10 @@
 import { Button, ButtonGroup, Dropdown } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
-import { setCurrentChannel } from '../store/slices/channelsSlice.js'
-import { toggleButtonVariant } from '../utilities.js'
-import filter from '../filter.js'
-import { showModal } from '../store/slices/modalSlice.js'
+import { setCurrentChannel } from '../../store/slices/channelsSlice.js'
+import { toggleButtonVariant } from '../../utilities.js'
+import filter from '../../filter.js'
+import { showModal } from '../../store/slices/modalSlice.js'
 
 function NewChannelButton({ channel }) {
   const dispatch = useDispatch()

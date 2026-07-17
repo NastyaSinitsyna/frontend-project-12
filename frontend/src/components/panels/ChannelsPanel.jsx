@@ -2,13 +2,13 @@ import { Button, Col, Form, Modal } from 'react-bootstrap'
 import { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
-import { validChannelSchema } from '../schemas/validChannelSchemas.js'
+import { validChannelSchema } from '../../schemas/validChannelSchemas.js'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { addChannel, setCurrentChannel, channelsSelectors } from '../store/slices/channelsSlice.js'
+import { addChannel, setCurrentChannel, channelsSelectors } from '../../store/slices/channelsSlice.js'
 
-import ChannelsList from './ChannelsList.jsx'
+import ChannelsList from '../channels/ChannelsList.jsx'
 
 function ChannelsPanel() {
   const dispatch = useDispatch()

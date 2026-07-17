@@ -1,8 +1,8 @@
 import { Button, Modal } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
-import { removeChannel } from '../store/slices/channelsSlice.js'
-import { hideModal } from '../store/slices/modalSlice.js'
+import { removeChannel } from '../../store/slices/channelsSlice.js'
+import { hideModal } from '../../store/slices/modalSlice.js'
 import { toast } from 'react-toastify'
 
 

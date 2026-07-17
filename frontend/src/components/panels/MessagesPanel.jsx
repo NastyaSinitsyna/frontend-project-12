@@ -3,9 +3,9 @@ import { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { channelsSelectors } from '../store/slices/channelsSlice.js'
-import { addMessage, messagesSelectors } from '../store/slices/messagesSlice.js'
-import filter from '../filter.js'
+import { channelsSelectors } from '../../store/slices/channelsSlice.js'
+import { addMessage, messagesSelectors } from '../../store/slices/messagesSlice.js'
+import filter from '../../filter.js'
 
 function MessagesPanel() {
   const dispatch = useDispatch()

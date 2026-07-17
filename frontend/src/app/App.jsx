@@ -7,11 +7,11 @@ import { useTranslation } from 'react-i18next'
 import MainPage from '../pages/MainPage.jsx'
 import AuthorizationPage from '../pages/AuthorizationPage.jsx'
 import NotFoundPage from '../pages/NotFoundPage.jsx'
-import PrivateRoute from '../components/PrivateRoute.jsx'
+import PrivateRoute from '../components/auth/PrivateRoute.jsx'
 import SignupPage from '../pages/SignupPage.jsx'
 import { ToastContainer } from 'react-toastify'
-import LogOutButton from '../components/LogOutButton.jsx'
-import Modal from '../components/Modal.jsx'
+import LogOutButton from '../components/auth/LogoutButton.jsx'
+import Modal from '../components/modals/Modal.jsx'
 
 
 const App = () => {
