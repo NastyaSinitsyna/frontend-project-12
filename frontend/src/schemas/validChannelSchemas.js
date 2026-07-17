@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import i18nextInstance from '../i18n.js'
+import i18nextInstance from '../i18n/i18n.js'
 
 export const validChannelSchema = (channels) => yup.object().shape({
     name: yup.string()
