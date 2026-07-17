@@ -18,9 +18,8 @@ function RemoveModal() {
       dispatch(hideModal())
       toast.success(t('messages.channelRemoved'))
     }
-    catch (error) {
+    catch {
       toast.error(t('errors.connection'))
-      throw error
     }
   }
   
