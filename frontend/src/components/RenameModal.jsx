@@ -31,9 +31,8 @@ function RenameModal() {
           dispatch(hideModal())
           toast.success(t('messages.channelRenamed'))
         }
-        catch (error) {
+        catch {
           toast.error(t('errors.connection'))
-          throw error
         }
       },
     })
