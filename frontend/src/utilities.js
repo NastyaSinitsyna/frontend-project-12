@@ -1,4 +1,4 @@
-import { storage } from './StorageService.js'
+import { storage } from './services/storageService.js'
 
 export const getAuthHeader = () => {
   const token = storage.getItem('token')

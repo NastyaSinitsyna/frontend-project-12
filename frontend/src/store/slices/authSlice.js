@@ -2,7 +2,7 @@ import axios from 'axios'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 import routes from '../../routes'
-import { storage } from '../../StorageService.js'
+import { storage } from '../../services/storageService.js'
 
 export const login = createAsyncThunk(
   'authData/login', 

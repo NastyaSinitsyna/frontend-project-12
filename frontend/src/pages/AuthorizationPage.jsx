@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { login } from '../store/slices/authSlice.js'
 import { logInSuccess } from '../store/slices/authSlice.js'
-import { storage } from '../StorageService.js'
+import { storage } from '../services/storageService.js'
 import { toast } from 'react-toastify'
 
 
