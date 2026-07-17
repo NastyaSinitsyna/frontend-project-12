@@ -7,7 +7,7 @@ import RollbarProvider from '../rollbar.jsx'
 import i18nextInstance from './i18n/i18n.js'
 import ErrorMessage from './components/ErrorMessage.jsx'
 
-import './index.css'
+import './styles/index.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 
