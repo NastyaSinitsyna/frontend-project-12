@@ -5,7 +5,7 @@ import { I18nextProvider } from 'react-i18next'
 import { ErrorBoundary } from '@rollbar/react'
 import RollbarProvider from '../rollbar.jsx'
 import i18nextInstance from './i18n/i18n.js'
-import ErrorMessage from './components/ErrorMessage.jsx'
+import ErrorMessage from './components/errors/ErrorMessage.jsx'
 
 import './styles/index.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
