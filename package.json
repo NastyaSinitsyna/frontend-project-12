@@ -1,14 +1,14 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "[![Actions Status](https://github.com/NastyaSinitsyna/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/NastyaSinitsyna/frontend-project-12/actions)",
-  "homepage": "https://github.com/NastyaSinitsyna/frontend-project-12#readme",
+  "description": "[![Actions Status](https://github.com/NastyaSinitsyna/slack-chat/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/NastyaSinitsyna/slack-chat/actions)",
+  "homepage": "https://github.com/NastyaSinitsyna/slack-chat#readme",
   "bugs": {
-    "url": "https://github.com/NastyaSinitsyna/frontend-project-12/issues"
+    "url": "https://github.com/NastyaSinitsyna/slack-chat/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NastyaSinitsyna/frontend-project-12.git"
+    "url": "git+https://github.com/NastyaSinitsyna/slack-chat.git"
   },
   "license": "ISC",
   "author": "",
